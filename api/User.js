@@ -7,4 +7,9 @@ router.post('/signup', (req, res) => {});
 // Signin
 router.post('/signin', (req, res) => {});
 
+// User
+router.get('/', (req, res) => {
+  res.send('Users');
+});
+
 module.exports = router;
