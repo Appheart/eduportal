@@ -1,15 +1,16 @@
-const express = require('express');
-const router = express.Router();
+import { Router } from 'express';
+
+const userRouter = Router();
 
 // Signup
-router.post('/signup', (req, res) => {});
+userRouter.post('/signup', (req, res) => {});
 
 // Signin
-router.post('/signin', (req, res) => {});
+userRouter.post('/signin', (req, res) => {});
 
 // User
-router.get('/', (req, res) => {
+userRouter.get('/', (req, res) => {
   res.send('Users');
 });
 
-module.exports = router;
+export { userRouter };
