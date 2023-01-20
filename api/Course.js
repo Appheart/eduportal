@@ -18,4 +18,4 @@ courseRouter.get('/', (req, res) => {
   res.send(courses.data);
 });
 
-export { courseRouter };
+export default courseRouter;

@@ -1,11 +1,12 @@
 import express from 'express';
 import dotenv from 'dotenv';
+import bodyParser from 'body-parser';
 
 dotenv.config();
 
 import connectDB from './config/db.js';
 
-import { courseRouter, userRouter } from './api/index.js';
+import { courseRouter, newsRouter, userRouter } from './api/index.js';
 
 const app = express();
 const port = process.env.PORT;
@@ -16,6 +17,8 @@ app.use(express.json());
 // Set Routes Controllers
 app.use('/user', userRouter);
 app.use('/course', courseRouter);
+app.use('/news', newsRouter);
+app.use(bodyParser.json());
 
 // Assign common routes
 app.get('/', (req, res) => {

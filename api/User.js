@@ -13,4 +13,4 @@ userRouter.get('/', (req, res) => {
   res.send('Users');
 });
 
-export { userRouter };
+export default userRouter;
