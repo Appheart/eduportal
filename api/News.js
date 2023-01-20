@@ -1,7 +1,24 @@
 import { Router } from 'express';
+import { Model } from 'mongoose';
 import { NewsModel } from '../models/index.js';
 
 const newsRouter = Router();
+
+// Get All
+newsRouter.get('/', async (req, res) => {
+  try {
+    const data = await NewsModel.find();
+
+    res.json(data);
+  } catch (error) {
+    res.status(500).json({ message: error.message });
+  }
+});
+
+// Get One
+newsRouter.get('/:id', (req, res) => {
+  res.send('news');
+});
 
 // Create One
 newsRouter.post('/', async (req, res) => {
@@ -26,17 +43,7 @@ newsRouter.post('/', async (req, res) => {
 newsRouter.post('/signin', (req, res) => {});
 
 // Update One
-newsRouter.get('/', (req, res) => {
-  res.send('news');
-});
-
-// Get One
-newsRouter.get('/', (req, res) => {
-  res.send('news');
-});
-
-// Get All
-newsRouter.get('/', (req, res) => {
+newsRouter.patch('/', (req, res) => {
   res.send('news');
 });
 

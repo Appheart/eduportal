@@ -6,6 +6,7 @@ const userSchema = new Schema({
   name: String,
   email: String,
   userName: String,
+  accountType: String,
   createdAt: {
     type: Date,
     default: Date.now,
