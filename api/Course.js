@@ -13,7 +13,7 @@ courseRouter.post('/signup', (req, res) => {});
 // Signin
 courseRouter.post('/signin', (req, res) => {});
 
-// course
+// Default Get request
 courseRouter.get('/', (req, res) => {
   res.send(courses.data);
 });

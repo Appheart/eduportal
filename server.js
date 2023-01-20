@@ -1,10 +1,14 @@
 import express from 'express';
+import dotenv from 'dotenv';
+
+dotenv.config();
+
+import connectDB from './config/db.js';
+
+import { courseRouter, userRouter } from './api/index.js';
 
 const app = express();
-const port = process.env.PORT || 3000;
-
-// Routers
-import { courseRouter, userRouter } from './api/index.js';
+const port = process.env.PORT;
 
 // Middlewares
 app.use(express.json());
@@ -17,6 +21,9 @@ app.use('/course', courseRouter);
 app.get('/', (req, res) => {
   res.send('Hello World!');
 });
+
+// DB
+connectDB();
 
 // App listens to port
 app.listen(port, () => {
