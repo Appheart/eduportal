@@ -6,7 +6,7 @@ const newsRouter = Router();
 // Get All
 newsRouter.get('/', async (req, res) => {
   try {
-    const pageNumber = parseInt(req.query.pageNumber) || 0;
+    const pageNumber = parseInt(req.query.page - 1) || 0;
     const limit = parseInt(req.query.limit) || 12;
     const result = {};
     const totalNews = await NewsModel.countDocuments().exec();
