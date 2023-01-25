@@ -1,21 +1,20 @@
 const mongoose = require('mongoose');
-const Joi = require("joi");
+const Joi = require('joi');
 
 const tagSchema = new mongoose.Schema({
   name: {
     type: String,
     required: true,
     minlength: 5,
-    maxlength: 25
+    maxlength: 25,
   },
   used: {
     type: Number,
-    default: 0
-  }
+    default: 0,
+  },
 });
 
-
-const Tag = mongoose.model("Tag", tagSchema);
+const Tag = mongoose.model('Tag', tagSchema);
 
 function validateTag(tag) {
   const schema = Joi.object({

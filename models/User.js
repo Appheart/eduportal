@@ -5,12 +5,6 @@ import Joi from 'joi';
 import jwt from 'jsonwebtoken';
 
 const userSchema = new mongoose.Schema({
-  name: {
-    type: String,
-    required: true,
-    minlength: 5,
-    maxlength: 50,
-  },
   email: {
     type: String,
     required: true,
@@ -31,10 +25,6 @@ const userSchema = new mongoose.Schema({
     maxlength: 1024,
     minlength: 5,
   },
-  isAdmin: {
-    type: Boolean,
-    default: false,
-  },
 });
 const User = mongoose.model('User', userSchema);
 
@@ -49,7 +39,6 @@ userSchema.methods.generateAuthToken = function () {
 // for registering validattion
 function validateUser(user) {
   const schema = Joi.object({
-    name: Joi.string().min(3).max(30).required(),
     email: Joi.string()
       .email({
         minDomainSegments: 2,

@@ -1,5 +1,4 @@
 import { Router } from 'express';
-import { Model } from 'mongoose';
 import { NewsModel } from '../models/index.js';
 
 const newsRouter = Router();
@@ -7,9 +6,35 @@ const newsRouter = Router();
 // Get All
 newsRouter.get('/', async (req, res) => {
   try {
-    const data = await NewsModel.find();
+    const pageNumber = parseInt(req.query.pageNumber) || 0;
+    const limit = parseInt(req.query.limit) || 12;
+    const result = {};
+    const totalNews = await NewsModel.countDocuments().exec();
+    let startIndex = pageNumber * limit;
+    const endIndex = (pageNumber + 1) * limit;
+    result.totalNews = totalNews;
 
-    res.json(data);
+    if (startIndex > 0) {
+      result.previous = {
+        pageNumber: pageNumber - 1,
+        limit: limit,
+      };
+    }
+
+    if (endIndex < (await NewsModel.countDocuments().exec())) {
+      result.next = {
+        pageNumber: pageNumber + 1,
+        limit: limit,
+      };
+    }
+
+    result.data = await NewsModel.find().skip(startIndex).limit(limit).exec();
+
+    result.rowsPerPage = limit;
+
+    const data = res.json(result.data);
+
+    return data;
   } catch (error) {
     res.status(500).json({ message: error.message });
   }
