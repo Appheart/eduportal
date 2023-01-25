@@ -9,7 +9,9 @@ newsRouter.get('/', async (req, res) => {
     const pageNumber = parseInt(req.query.page - 1) || 0;
     const limit = parseInt(req.query.limit) || 12;
     const result = {};
-    const totalNews = await NewsModel.countDocuments().exec();
+    const totalNews = await NewsModel.aggregate([
+      { $sort: { publishedOn: 1 } },
+    ]);
     let startIndex = pageNumber * limit;
     const endIndex = (pageNumber + 1) * limit;
     result.totalNews = totalNews;
@@ -21,14 +23,19 @@ newsRouter.get('/', async (req, res) => {
       };
     }
 
-    if (endIndex < (await NewsModel.countDocuments().exec())) {
+    if (
+      endIndex < (await NewsModel.aggregate([{ $sort: { publishedOn: 1 } }]))
+    ) {
       result.next = {
         pageNumber: pageNumber + 1,
         limit: limit,
       };
     }
 
-    result.data = await NewsModel.find().skip(startIndex).limit(limit).exec();
+    result.data = await NewsModel.aggregate([{ $sort: { publishedOn: 1 } }])
+      .skip(startIndex)
+      .limit(limit)
+      .exec();
 
     result.rowsPerPage = limit;
 
