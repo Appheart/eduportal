@@ -9,9 +9,7 @@ newsRouter.get('/', async (req, res) => {
     const pageNumber = parseInt(req.query.page - 1) || 0;
     const limit = parseInt(req.query.limit) || 12;
     const result = {};
-    const totalNews = await NewsModel.aggregate([
-      { $sort: { publishedOn: 1 } },
-    ]);
+    const totalNews = await NewsModel.find().sort('-publishedOn');
     let startIndex = pageNumber * limit;
     const endIndex = (pageNumber + 1) * limit;
     result.totalNews = totalNews;
@@ -23,16 +21,15 @@ newsRouter.get('/', async (req, res) => {
       };
     }
 
-    if (
-      endIndex < (await NewsModel.aggregate([{ $sort: { publishedOn: 1 } }]))
-    ) {
+    if (endIndex < (await NewsModel.find().sort('-publishedOn'))) {
       result.next = {
         pageNumber: pageNumber + 1,
         limit: limit,
       };
     }
 
-    result.data = await NewsModel.aggregate([{ $sort: { publishedOn: 1 } }])
+    result.data = await NewsModel.find()
+      .sort('-publishedOn')
       .skip(startIndex)
       .limit(limit)
       .exec();
@@ -81,4 +78,10 @@ newsRouter.patch('/', (req, res) => {
 
 // Delete One
 
+newsRouter.delete('/:id', async (req, res) => {
+  const news = await NewsModel.deleteOne({ _id: req.params.id });
+
+  res.send(news);
+  return news;
+});
 export default newsRouter;
