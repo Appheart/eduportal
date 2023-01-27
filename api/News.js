@@ -45,8 +45,11 @@ newsRouter.get('/', async (req, res) => {
 });
 
 // Get One
-newsRouter.get('/:id', (req, res) => {
-  res.send('news');
+newsRouter.get('/:id', async (req, res) => {
+  const news = await NewsModel.findById({ _id: req.params.id });
+
+  res.send(news);
+  return news;
 });
 
 // Create One
@@ -79,7 +82,7 @@ newsRouter.patch('/', (req, res) => {
 // Delete One
 
 newsRouter.delete('/:id', async (req, res) => {
-  const news = await NewsModel.deleteOne({ _id: req.params.id });
+  const news = await NewsModel.findByIdAndDelete({ _id: req.params.id });
 
   res.send(news);
   return news;
