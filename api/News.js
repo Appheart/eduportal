@@ -21,7 +21,7 @@ newsRouter.get('/', async (req, res) => {
       };
     }
 
-    if (endIndex < (await NewsModel.find().sort('-publishedOn'))) {
+    if (endIndex < (await NewsModel.find())) {
       result.next = {
         pageNumber: pageNumber + 1,
         limit: limit,

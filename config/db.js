@@ -2,8 +2,10 @@ import dotenv from 'dotenv';
 import mongoose from 'mongoose';
 dotenv.config();
 
+const uri = process.env.MONGO_URI;
+
 const connectDB = () => {
-  mongoose.connect(process.env.MONGO_URI, {
+  mongoose.connect(uri, {
     useNewUrlParser: true,
     useUnifiedTopology: true,
   });

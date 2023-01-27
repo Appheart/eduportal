@@ -6,7 +6,12 @@ dotenv.config();
 
 import connectDB from './config/db.js';
 
-import { courseRouter, newsRouter, userRouter } from './api/index.js';
+import {
+  courseRouter,
+  JambRouter,
+  newsRouter,
+  userRouter,
+} from './api/index.js';
 
 const app = express();
 const port = process.env.PORT;
@@ -30,6 +35,7 @@ app.use((req, res, next) => {
 app.use('/user', userRouter);
 app.use('/course', courseRouter);
 app.use('/news', newsRouter);
+app.use('/jamb', JambRouter);
 app.use(bodyParser.json());
 
 // Assign common routes
