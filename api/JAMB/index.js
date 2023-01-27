@@ -1,5 +1,5 @@
 import { Router } from 'express';
-import AccreditedCentersRouter from './accreditedCenters.js';
+import AccreditedCentersRouter from './AccreditedCenters.js';
 import SubjectRouter from './Subject.js';
 import TextBookRouter from './TextBook.js';
 
