@@ -12,12 +12,16 @@ import {
   newsRouter,
   userRouter,
 } from './api/index.js';
+import ftpRouter from './api/FTP/index.js';
+import cors from 'cors';
 
 const app = express();
 const port = process.env.PORT;
 
 // Middlewares
 app.use(express.json());
+app.use(cors());
+app.use(express.static('public'));
 app.use((req, res, next) => {
   res.header('Access-Control-Allow-Origin', '*');
   res.header(
@@ -36,6 +40,7 @@ app.use('/user', userRouter);
 app.use('/course', courseRouter);
 app.use('/news', newsRouter);
 app.use('/jamb', JambRouter);
+app.use('/upload', ftpRouter);
 app.use(bodyParser.json());
 
 // Assign common routes
