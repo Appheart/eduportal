@@ -44,6 +44,19 @@ newsRouter.get('/', async (req, res) => {
   }
 });
 
+// Get All Preferenced
+newsRouter.get('/p/', async (req, res) => {
+  try {
+    result = await NewsModel.find();
+
+    const data = res.json(result.data);
+
+    return data;
+  } catch (error) {
+    res.status(500).json({ message: error.message });
+  }
+});
+
 // Get One
 newsRouter.get('/:id', async (req, res) => {
   const news = await NewsModel.findById({ _id: req.params.id });
